@@ -3,15 +3,15 @@
     <scroll class="chat-wrapper" :data="chatList">
       <div>
         <ul>
-          <router-link 
-            to='/chatroom' 
-            tag="li" 
-            v-for="addinfo in this.addList" 
-            :key="addinfo.id" 
+          <router-link
+            to='/chatroom'
+            tag="li"
+            v-for="addinfo in this.addList"
+            :key="addinfo.id"
             class="item"
           >
             <div class="item-cell" @click="">
-              <img class="item-img" :src="addinfo.imgurl" height="40" width="40" />
+              <img class="item-img" :src="addinfo.imgurl" height="40" width="40"/>
               <h2 class="dissname" v-html="addinfo.dissname"></h2>
               <p class="summary">点击发送消息</p>
               <span class="item-time">刚刚</span>
@@ -19,18 +19,19 @@
           </router-link>
         </ul>
         <ul>
-          <router-link 
-            to='/chatroom' 
-            tag="li" 
-            v-for="info in chatList" 
-            :key="info.id" 
+          <router-link
+            to='/chatroom'
+            tag="li"
+            v-for="info in chatList"
+            :key="info.id"
             class="item"
           >
             <div class="item-cell" @click="gotoChatroom(info)">
               <div class="img-unread">
-                <img class="item-img" :src="info.imgurl" height="40" width="40" /><span v-html="info.unread" v-show="info.unread"></span>
+                <img class="item-img" :src="info.headPortrait" height="40" width="40"/><span v-html="info.unread"
+                                                                                             v-show="info.unread"></span>
               </div>
-              <h2 class="dissname" v-html="info.dissname"></h2>
+              <h2 class="dissname" v-html="info.friendName"></h2>
               <p class="summary" v-html="info.summary"></p>
               <span class="item-time" v-html="info.time"></span>
             </div>
@@ -60,8 +61,18 @@
       ])
     },
     methods: {
+      getData: function () {
+        let api = 'http://127.0.0.1:18085/user-friend/message?userId=1349643297211699201'
+        this.$http.post(api)
+          .then((res) => {
+            console.log('chatList:' + JSON.stringify(res.body.data))
+            this.chatList = res.body.data
+          }, (err) => {
+            console.log(err)
+          })
+      },
       enterMessage () {
-        console.log(12)
+        console.log('enterMessage')
       },
       gotoChatroom (info) {
         info.unread = ''  // 点击后使未读消息的提示消失
@@ -75,64 +86,18 @@
     },
     data () {
       return {
-        chatList: [
-          {
-            dissname: '诸葛亮',
-            dissid: 'zhugeliang',
-            phone: '18312345678',
-            imgurl: 'http://static.bbs.9wee.com/attachment/forum/201306/07/210751qbp4p4c5yzhhbpym.jpg',
-            location: '蜀国',
-            album: 'http://src.zhigame.com/news/20130123/2013012310413268.jpg',
-            source: '通过搜索手机号添加',
-            summary: '点击发送消息',
-            unread: '',
-            time: '08:25'
-          },
-          {
-            dissname: '赵云',
-            dissid: 'zhaoyun',
-            phone: '18312345678',
-            imgurl: 'http://p5.so.qhimgs1.com/t0171807b9d0a9ac16b.jpg',
-            location: '蜀国',
-            album: 'http://src.zhigame.com/news/20130123/2013012310413268.jpg',
-            source: '通过扫一扫添加',
-            summary: '有2个未读消息',
-            unread: 2,
-            time: '12:36'
-          },
-          {
-            dissname: '司马懿',
-            dissid: 'simayi',
-            phone: '18312345678',
-            imgurl: 'http://www.e3ol.com/biography/upfiles/2008/20089822301342545.jpg',
-            location: '魏国',
-            album: 'http://src.zhigame.com/news/20130123/2013012310413268.jpg',
-            source: '通过扫一扫添加',
-            summary: '有3个未读消息',
-            unread: 3,
-            time: '昨天'
-          },
-          {
-            dissname: '华佗',
-            dissid: 'huatuo',
-            phone: '18312345678',
-            imgurl: 'http://img1.gamedog.cn/2014/01/23/30-1401230942040.jpg',
-            location: '东汉',
-            album: 'http://src.zhigame.com/news/20130123/2013012310413268.jpg',
-            source: '通过扫一扫添加',
-            summary: '有1个未读消息',
-            unread: 1,
-            time: '8月18日'
-          }
-        ],
-        moreList: []
+        chatList: []
       }
+    },
+    // mounted是vue中的一个钩子函数，一般在初始化页面完成后，再对dom节点进行相关操作。
+    mounted () {
+      this.getData()
     }
   }
 </script>
 
 <style scoped>
-  .chat{
+  .chat {
     position: fixed;
     /*border: 1px solid red;*/
     /*width: 100%;*/
@@ -141,23 +106,28 @@
     left: 0;
     right: 0;
   }
-  .item{
+
+  .item {
     width: 100%;
     margin-left: 0;
   }
-  .chat-wrapper{
+
+  .chat-wrapper {
     height: 100%;
     overflow: hidden;
   }
-  .item-cell{
+
+  .item-cell {
     position: relative;
-    border-bottom: 1px solid rgba(153,153,153,0.4); 
+    border-bottom: 1px solid rgba(153, 153, 153, 0.4);
     height: 60px;
   }
-  .img-unread{
+
+  .img-unread {
     position: relative;
   }
-  .img-unread span{
+
+  .img-unread span {
     position: absolute;
     top: 0;
     left: 44px;
@@ -172,30 +142,34 @@
     border: 1px solid red;
     border-radius: 50%;
   }
-  .item-img{
+
+  .item-img {
     float: left;
-    margin:10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
   }
-  .dissname{
+
+  .dissname {
     /*border: 1px solid red;*/
     font-size: 14px;
     font-weight: bold;
     padding-top: 10px;
     padding-left: 70px;
   }
-  .summary{
+
+  .summary {
     font-size: 14px;
     padding-top: 10px;
     padding-left: 70px;
-    color: rgba(153,153,153,0.8);
+    color: rgba(153, 153, 153, 0.8);
     font-style: italic;
   }
-  .item-time{
+
+  .item-time {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 12px;
-    color: rgba(153,153,153,0.8); 
+    color: rgba(153, 153, 153, 0.8);
   }
-   
+
 </style>
