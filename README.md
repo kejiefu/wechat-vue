@@ -126,7 +126,7 @@ npm run build //项目打包
 
 ```
 
-###此项目是clone https://github.com/sukizhao/wechat-by-vue 而来，在此项目上增加后台项目的关联和数据存储，后台项目地址：https://github.com/kejiefu/spring-boot-netty-chat
+### 后台项目地址：https://github.com/kejiefu/spring-boot-netty-chat
 
 
 
