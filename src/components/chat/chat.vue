@@ -43,133 +43,134 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Scroll from '../../base/scroll/scroll'
-  import {mapMutations, mapGetters} from 'vuex'
+import Scroll from '../../base/scroll/scroll'
+import {mapMutations, mapGetters} from 'vuex'
 
-  export default {
-    components: {
-      Scroll
+export default {
+  components: {
+    Scroll
+  },
+  // updated () {
+  //   console.log('测试：测试：')
+  //   console.log(this.addList)
+  // },
+  computed: {
+    ...mapGetters([ // 拿到info的状态
+      'info',
+      'addList'
+    ])
+  },
+  methods: {
+    getData: function () {
+      let api = 'http://127.0.0.1:18085/user-friend/message'
+      let headers = {'Content-Type': 'application/json;charset=utf-8', 'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IuafryIsInVzZXJJZCI6MTM0OTY0MzI5NzIxMTY5OTIwMX0.fCVDgHAnOCq66Yib1lLGOUZd-FeBr4lsPGz05OuORzY'}
+      this.$http.post(api, {}, {headers: headers})
+        .then((res) => {
+          console.log('chatList:' + JSON.stringify(res.body.data))
+          this.chatList = res.body.data
+        }, (err) => {
+          console.log(err)
+        })
     },
-    // updated () {
-    //   console.log('测试：测试：')
-    //   console.log(this.addList)
-    // },
-    computed: {
-      ...mapGetters([ // 拿到info的状态
-        'info',
-        'addList'
-      ])
+    enterMessage () {
+      console.log('enterMessage')
     },
-    methods: {
-      getData: function () {
-        let api = 'http://127.0.0.1:18085/user-friend/message?userId=1349643297211699201'
-        this.$http.post(api)
-          .then((res) => {
-            console.log('chatList:' + JSON.stringify(res.body.data))
-            this.chatList = res.body.data
-          }, (err) => {
-            console.log(err)
-          })
-      },
-      enterMessage () {
-        console.log('enterMessage')
-      },
-      gotoChatroom (info) {
-        info.unread = ''  // 点击后使未读消息的提示消失
-        info.summary = '点击发送消息' // 点击后使未读消息的提示消失
-        info.time = '刚刚'
-        this.setAddress(info)
-      },
-      ...mapMutations({
-        setAddress: 'SET_INFO'
-      })
+    gotoChatroom (info) {
+      info.unread = ''  // 点击后使未读消息的提示消失
+      info.summary = '点击发送消息' // 点击后使未读消息的提示消失
+      info.time = '刚刚'
+      this.setAddress(info)
     },
-    data () {
-      return {
-        chatList: []
-      }
-    },
-    // mounted是vue中的一个钩子函数，一般在初始化页面完成后，再对dom节点进行相关操作。
-    mounted () {
-      this.getData()
+    ...mapMutations({
+      setAddress: 'SET_INFO'
+    })
+  },
+  data () {
+    return {
+      chatList: []
     }
+  },
+  // mounted是vue中的一个钩子函数，一般在初始化页面完成后，再对dom节点进行相关操作。
+  mounted () {
+    this.getData()
   }
+}
 </script>
 
 <style scoped>
-  .chat {
-    position: fixed;
-    /*border: 1px solid red;*/
-    /*width: 100%;*/
-    top: 50px;
-    bottom: 50px;
-    left: 0;
-    right: 0;
-  }
+.chat {
+  position: fixed;
+  /*border: 1px solid red;*/
+  /*width: 100%;*/
+  top: 50px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+}
 
-  .item {
-    width: 100%;
-    margin-left: 0;
-  }
+.item {
+  width: 100%;
+  margin-left: 0;
+}
 
-  .chat-wrapper {
-    height: 100%;
-    overflow: hidden;
-  }
+.chat-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
 
-  .item-cell {
-    position: relative;
-    border-bottom: 1px solid rgba(153, 153, 153, 0.4);
-    height: 60px;
-  }
+.item-cell {
+  position: relative;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.4);
+  height: 60px;
+}
 
-  .img-unread {
-    position: relative;
-  }
+.img-unread {
+  position: relative;
+}
 
-  .img-unread span {
-    position: absolute;
-    top: 0;
-    left: 44px;
-    font-size: 10px;
-    line-height: 14px;
-    color: #fff;
-    height: 14px;
-    width: 14px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: red;
-    border: 1px solid red;
-    border-radius: 50%;
-  }
+.img-unread span {
+  position: absolute;
+  top: 0;
+  left: 44px;
+  font-size: 10px;
+  line-height: 14px;
+  color: #fff;
+  height: 14px;
+  width: 14px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 50%;
+}
 
-  .item-img {
-    float: left;
-    margin: 10px 10px 10px 10px;
-  }
+.item-img {
+  float: left;
+  margin: 10px 10px 10px 10px;
+}
 
-  .dissname {
-    /*border: 1px solid red;*/
-    font-size: 14px;
-    font-weight: bold;
-    padding-top: 10px;
-    padding-left: 70px;
-  }
+.dissname {
+  /*border: 1px solid red;*/
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-left: 70px;
+}
 
-  .summary {
-    font-size: 14px;
-    padding-top: 10px;
-    padding-left: 70px;
-    color: rgba(153, 153, 153, 0.8);
-    font-style: italic;
-  }
+.summary {
+  font-size: 14px;
+  padding-top: 10px;
+  padding-left: 70px;
+  color: rgba(153, 153, 153, 0.8);
+  font-style: italic;
+}
 
-  .item-time {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 12px;
-    color: rgba(153, 153, 153, 0.8);
-  }
+.item-time {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: rgba(153, 153, 153, 0.8);
+}
 
 </style>
