@@ -82,22 +82,8 @@ npm run build //项目打包
     │   │           └── address-more.vue              // 通讯录更多详情组件
     │   ├── find
     │   │   ├── find.vue                              // 发现组件
-    │   │   ├── find-circle
-    │   │   │   └── find-circle.vue                   // 朋友圈组件
-    │   │   ├── scan
-    │   │   │   └── scan.vue                          // 扫一扫组件
-    │   │   └── shake
-    │   │       └── shake.vue                         // 摇一摇组件
     │   ├── me
     │   │   ├── me.vue                                // 个人中心组件
-    │   │   ├── card
-    │   │   │   └── card.vue                          // 卡包组件
-    │   │   ├── money
-    │   │   │   └── money.vue                         // 钱包组件
-    │   │   ├── collection
-    │   │   │   └── collection.vue                    // 收藏组件
-    │   │   ├── album
-    │   │   │   └── album.vue                         // 相册组件
     │   │   └── set
     │   │       └── set.vue                           // 设置组件
     │   ├── chatroom
