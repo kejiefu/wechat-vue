@@ -6,7 +6,7 @@
           <div @click="back">
             <img src="../../../assets/返回.png" height="16" width="19"/>
           </div>
-          <span>设置</span>
+          <span>{{ title }}</span>
         </div>
         <div class="content">
           <div class="content-wrapper" ref="wrapper">
@@ -47,12 +47,7 @@ export default {
   },
   data () {
     return {
-      value1: false,
-      value2: true,
-      value3: true,
-      value4: false,
-      value5: true,
-      title: 11
+      title: '设置'
     }
   },
   mounted () {
@@ -71,6 +66,10 @@ export default {
       this.$router.back()   // 返回上一级
     },
     logout () {
+      // 清除token信息
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('username')
+      window.localStorage.removeItem('headPortrait')
       this.$toast({
         message: '退出成功',
         duration: 1500

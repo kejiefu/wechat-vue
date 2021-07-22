@@ -73,6 +73,7 @@ export default {
             // 写入token
             localStorage.token = res.body.data.authorization
             localStorage.username = res.body.data.username
+            localStorage.headPortrait = res.body.data.headPortrait
             this.$router.push({path: '/me'})
           } else {
             this.$toast({
