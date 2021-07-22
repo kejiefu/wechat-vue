@@ -63,10 +63,10 @@ export default {
   methods: {
     getData: function () {
       let api = 'http://127.0.0.1:18085/user-friend/message'
-      let headers = {'Content-Type': 'application/json;charset=utf-8', 'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IuafryIsInVzZXJJZCI6MTM0OTY0MzI5NzIxMTY5OTIwMX0.fCVDgHAnOCq66Yib1lLGOUZd-FeBr4lsPGz05OuORzY'}
+      let headers = {'Content-Type': 'application/json;charset=utf-8', 'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IuafryIsInVzZXJJZCI6MTM0OTY0MzI5NzIxMTY5OTIwMX0.fCVDgHAnOCq66Yib1lLGOUZd-FeBr4lsPGz05OuORzY'}
       this.$http.post(api, {}, {headers: headers})
         .then((res) => {
-          console.log('chatList:' + JSON.stringify(res.body.data))
+          console.log('res.body.data:' + JSON.stringify(res.body.data))
           this.chatList = res.body.data
         }, (err) => {
           console.log(err)

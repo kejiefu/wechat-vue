@@ -6,26 +6,20 @@
           <div @click="back">
             <img src="../../../assets/返回.png" height="16" width="19"/>
           </div>
-          <span>设置</span>
+          <span>{{ title }}</span>
         </div>
         <div class="content">
           <div class="content-wrapper" ref="wrapper">
             <div class="content-text">
               <div class="content-body">
-                <h2></h2>
                 <div class="server">
-                  <div @click="logout">
-                    <p>退出</p>
-                    <span class="switch">
-                                      </span>
-                  </div>
-                  <router-link tag="div" class="setup" to="login">
-                    <div tag="div" to="/set/login">
-                      <p>登录</p>
-                      <span class="switch">
-                    </span>
-                    </div>
-                  </router-link>
+                  <mt-field label="username" placeholder="账号" v-model="username"></mt-field>
+                </div>
+                <div class="server">
+                  <mt-field label="password" placeholder="密码" type="password" v-model="password"></mt-field>
+                </div>
+                <div class="server">
+                  <mt-button size="large" @click="login">登录</mt-button>
                 </div>
               </div>
             </div>
@@ -38,21 +32,20 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
-import {MessageBox} from 'mint-ui'
+import Indicator from 'mint-ui'
+import Md5 from 'js-md5'
 
 export default {
   components: {
     BScroll,
-    MessageBox
+    Md5,
+    Indicator
   },
   data () {
     return {
-      value1: false,
-      value2: true,
-      value3: true,
-      value4: false,
-      value5: true,
-      title: 11
+      title: '登录',
+      username: '',
+      password: ''
     }
   },
   mounted () {
@@ -70,11 +63,30 @@ export default {
       // }
       this.$router.back()   // 返回上一级
     },
-    logout () {
-      this.$toast({
-        message: '退出成功',
-        duration: 1500
-      })
+    login () {
+      let api = 'http://127.0.0.1:18085/user/login'
+      let data = {username: this.username, password: Md5(this.password)}
+      this.$http.post(api, data)
+        .then((res) => {
+          console.log('res.body.data:' + JSON.stringify(res.body.data))
+          if (res.body.data != null) {
+            // 写入token
+            localStorage.token = res.body.data.authorization
+            localStorage.username = res.body.data.username
+            this.$router.push({path: '/me'})
+          } else {
+            this.$toast({
+              message: '密码错误',
+              duration: 1500
+            })
+          }
+        }, (err) => {
+          this.$toast({
+            message: '服务器异常，请稍后再试',
+            duration: 1500
+          })
+          console.log(err)
+        })
     }
   }
 }
@@ -137,29 +149,6 @@ export default {
   overflow: hidden;
 }
 
-.content-top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  display: flex;
-  background-color: #666f76;
-}
-
-.payment, .pocket, .card {
-  flex: 1;
-  display: flex;
-  /*flex-direction: row | row-reverse | column | column-reverse;*/
-  flex-direction: column;
-  color: #fff;
-  justify-content: center;
-  align-items: center;
-}
-
-.pocket {
-  padding-top: 20px;
-}
 
 .payment h4, .pocket h4, .card h4 {
   margin-top: 10px;
@@ -174,33 +163,13 @@ export default {
   padding-top: 20px;
 }
 
-.server div {
+.server {
   /*border: 1px solid red;*/
   position: relative;
   height: 40px;
   background-color: #fff;
-  margin-top: 10px;
+  margin-top: 5%;
 }
 
-.server div p {
-  font-size: 16px;
-  line-height: 40px;
-  padding-left: 10px;
-}
-
-.switch {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
-
-.slide-enter-active, .slide-leave-active {
-  transition: all 0.3s;
-}
-
-.slide-enter, .slide-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
 
 </style>

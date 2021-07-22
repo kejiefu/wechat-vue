@@ -12,11 +12,8 @@ import Scan from '../components/find/scan/scan'
 import Shake from '../components/find/shake/shake'
 import ChatroomUser from '../components/chatroom/chatroom-user/chatroom-user'
 import AddressMore from '../components/address/address-detail/address-more/address-more'
-import Money from '../components/me/money/money'
-import Collection from '../components/me/collection/collection'
-import Album from '../components/me/album/album'
-import Card from '../components/me/card/card'
 import Set from '../components/me/set/set'
+import Login from '../components/me/set/login'
 
 Vue.use(Router)
 
@@ -83,24 +80,12 @@ export default new Router({
       component: Me,
       children: [
         {
-          path: 'money',
-          component: Money
-        },
-        {
-          path: 'collection',
-          component: Collection
-        },
-        {
-          path: 'album',
-          component: Album
-        },
-        {
-          path: 'card',
-          component: Card
-        },
-        {
           path: 'set',
           component: Set
+        },
+        {
+          path: 'login',
+          component: Login
         }
       ]
     }

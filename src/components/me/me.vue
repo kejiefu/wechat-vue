@@ -3,46 +3,26 @@
     <div class="me-wrapper" ref="wrapper">
       <div class="me-content">
         <div class="aboutme">
-          <img 
-            class="aboutme-img" 
+          <img
+            class="aboutme-img"
             @click="imgbeBig"
-            src="../../assets/me/minion.png" 
-            :height="this.height" 
-            :width="this.width" 
+            src="../../assets/me/minion.png"
+            :height="this.height"
+            :width="this.width"
             ref="aboutme"
           />
           <div>
             <h2>minion</h2>
             <p>微信号：DespicableMe</p>
           </div>
-          <img 
-            class="aboutme-code" 
+          <img
+            class="aboutme-code"
             @click="codebeBig"
-            src="../../assets/me/二维码.png" 
-            :height="this.codeheight" 
-            :width="this.codewidth" 
+            src="../../assets/me/二维码.png"
+            :height="this.codeheight"
+            :width="this.codewidth"
             ref="codeimg"
           />
-        </div>
-        <router-link tag="div" class="money" to="/me/money">
-          <img class="money-img" src="../../assets/me/钱包.png" height="380" width="380" />
-          <span class="money-name">钱包</span>
-       </router-link>
-        <router-link tag="div" class="collection" to="/me/collection">
-          <img class="collection-img" src="../../assets/me/收藏.png" height="32" width="32" />
-          <span class="collection-name">收藏</span>
-        </router-link>
-        <router-link tag="div" class="photo" to="/me/album">
-          <img class="photo-img" src="../../assets/me/相册.png" height="32" width="32" />
-          <span class="photo-name">相册</span>
-        </router-link>
-        <router-link tag="div" class="card" to="/me/card">
-          <img class="card-img" src="../../assets/me/卡包.png" height="32" width="32" />
-          <span class="card-name">卡包</span>
-        </router-link>
-        <div class="emoticon" @click="warn">
-          <img class="emoticon-img" src="../../assets/me/表情.png" height="32" width="32" />
-          <span class="emoticon-name">表情</span>
         </div>
         <router-link tag="div" class="setup" to="/me/set">
           <img class="setup-img" src="../../assets/me/设置.png" height="32" width="32" />
@@ -104,12 +84,6 @@
           this.codewidth = 30
           this.$refs.codeimg.style.transform = 'rotate(0deg)'
         }
-      },
-      warn () {
-        this.$toast({
-          message: '尚未添加表情包',
-          duration: 1500
-        })
       }
     }
   }
@@ -133,7 +107,7 @@
   .me-content{
     /*border: 1px solid blue;*/
     overflow: hidden;
-  }  
+  }
   .aboutme{
     position: relative;
     height: 60px;
@@ -178,7 +152,7 @@
   }
   .money{
     display: flex;
-    align-items: center; 
+    align-items: center;
     left: 0;
     height: 20px;
     padding: 8px 10px;
@@ -200,7 +174,7 @@
   }
   .setup{
     display: flex;
-    align-items: center; 
+    align-items: center;
     left: 0;
     height: 20px;
     padding: 8px 10px;

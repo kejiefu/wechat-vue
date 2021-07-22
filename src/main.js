@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import VueLazyLoad from 'vue-lazyload'
 import VueResource from 'vue-resource'
+import VueCookies from 'vue-cookies'
 
 import './common/style.css' // 这里需要引入基本的样式
 
@@ -20,6 +21,8 @@ Vue.use(VueLazyLoad, {
 })
 
 Vue.use(VueResource)
+
+Vue.use(VueCookies)
 
 Vue.config.productionTip = false
 

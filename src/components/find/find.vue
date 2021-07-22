@@ -6,7 +6,7 @@
           <img class="find-img" src="../../assets/find/朋友圈.png" />
           <span class="find-item">朋友圈</span>
         </router-link>
-        <router-link tag="div" class="friend-circle" @click="warn" to="/find/scan">
+<!--        <router-link tag="div" class="friend-circle" @click="warn" to="/find/scan">
           <img class="find-img" src="../../assets/find/扫一扫.png" />
           <span class="find-item">扫一扫</span>
         </router-link>
@@ -26,11 +26,11 @@
             <span class="find-item" style="">购物</span>
           </div>
         </a>
-        
+
         <div class="friend-circle" @click="littleApp">
           <img class="find-img" src="../../assets/find/小程序.png" />
           <span class="find-item">小程序</span>
-        </div>         
+        </div>         -->
       </div>
       <router-view></router-view>
     </div>
@@ -104,5 +104,5 @@
     width: 20px;
     padding-right: 20px;
   }
-     
+
 </style>

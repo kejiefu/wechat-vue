@@ -1,7 +1,7 @@
 ﻿### Vue.js 2.0 实战项目
 
 基于 Vue + Vuex + Vue-router + Webpack 2.0
-打造微信界面，实现了微信聊天、搜索、点赞、通讯录（快速导航）、个人中心、模拟对话、朋友圈、设置等功能。
+打造界面，实现了登录聊天、搜索、点赞、通讯录（快速导航）、个人中心、模拟对话、朋友圈、设置等功能。
 
 ### 技术栈
 
@@ -34,7 +34,7 @@ npm run build //项目打包
 
 # 页面部分截图
 
-### 微信聊天（每个联系人聊天后可自动添加到首页）
+### 聊天（每个联系人聊天后可自动添加到首页）
 
 <img src="https://raw.githubusercontent.com/caochangkui/common-resources/master/wechat-img/screenshot/GIF111.gif" width="225" height="400" alt="" />
 
@@ -42,11 +42,6 @@ npm run build //项目打包
 ### 朋友圈、点赞
 
 <img src="https://raw.githubusercontent.com/caochangkui/common-resources/master/wechat-img/screenshot/GIF222.gif" width="225" height="400"/>
-
-### 个人中心、相册、钱包、卡包、设置
-
-<img src="https://raw.githubusercontent.com/caochangkui/common-resources/master/wechat-img/screenshot/GIF333.gif" width="225" height="400"/>
-
 
 
 # 项目树

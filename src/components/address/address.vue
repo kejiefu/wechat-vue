@@ -13,28 +13,28 @@
                 <img src="../../assets/address/群聊.png" />
                 <span>群聊</span>
               </div>
-              <div class="new-friend" @click="warn">
+<!--              <div class="new-friend" @click="warn">
                 <img src="../../assets/address/标签.png" />
                 <span>标签</span>
               </div>
               <div class="new-friend" @click="warn">
                 <img src="../../assets/address/公众号.png" />
                 <span>公众号</span>
-              </div>
+              </div>-->
             </div>
           </mt-cell>
         </mt-index-section>
-        <mt-index-section 
-          v-for="(item, index) in personnelList" 
-          :key="item.id" 
+        <mt-index-section
+          v-for="(item, index) in personnelList"
+          :key="item.id"
           :index="item.group"
         >
-          <mt-cell 
-            class="address-item" 
-            v-for="info in item.info" 
-            :key="info.id" 
+          <mt-cell
+            class="address-item"
+            v-for="info in item.info"
+            :key="info.id"
             :title="info.dissname"
-            
+
           >
             <div class="mt-cell-wrapper" @click="gotoDetail(info)">
               <img v-lazy="info.imgurl" height="40" width="40" />
