@@ -1,8 +1,8 @@
 {
-  "name": "vue--wechat--cck",
+  "name": "wechat-vue",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "caochangkui",
+  "author": "ke",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
