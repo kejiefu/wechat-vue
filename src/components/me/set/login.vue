@@ -32,7 +32,7 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
-import Indicator from 'mint-ui'
+import Indicator from 'vue-indicator'
 import Md5 from 'js-md5'
 
 export default {
@@ -71,7 +71,7 @@ export default {
           console.log('res.body.data:' + JSON.stringify(res.body.data))
           if (res.body.data != null) {
             // 写入token
-            localStorage.token = res.body.data.authorization
+            localStorage.token = 'Bearer ' + res.body.data.authorization
             localStorage.username = res.body.data.username
             localStorage.headPortrait = res.body.data.headPortrait
             this.$router.push({path: '/me'})

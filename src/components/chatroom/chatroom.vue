@@ -5,7 +5,7 @@
         <router-link to='/chat' >
           <img class="img" src="../../assets/返回.png" @click='clearContent' height="16" width="19" />
         </router-link>
-        <span class="dissname">{{this.info.dissname}}</span>
+        <span class="dissname">{{this.info.friendName}}</span>
         <span class="logo" @click="gotoUser(info)">
           <img src="../../assets/我.png" height="28" width="28">
           <!-- <span class="icon-user"></span> -->
@@ -34,9 +34,9 @@
       </div>
       <div class="bottom">
         <div class="send">
-          <input 
-            type="text" 
-            placeholder="请输入聊天内容" 
+          <input
+            type="text"
+            placeholder="请输入聊天内容"
             class="sText"
             ref="sTest"
           />
@@ -88,13 +88,6 @@
           //   replyImg: '',
           //   askContent: '你好',
           //   replyContent: '谢谢'
-          // },
-          // {
-          //   askImg: require('../../assets/me/minion.png'),
-          //   replyImg: '',
-          //   askContent: '你是谁',
-          //   replyContent: '你猜啊'
-          // }
         ]
       }
     },
@@ -129,14 +122,13 @@
             askImg: require('../../assets/me/minion.png'),
             askContent: this.text
           })
-
           setTimeout(() => {
             this.content.push({
               replyImg: '',
               replyContent: this.randomReply[Math.floor(Math.random() * 19)]
             })
             for (let i = 0; i < this.content.length; i++) { // 定义回复者的头像
-              this.content[i].replyImg = this.info.imgurl
+              this.content[i].replyImg = this.info.headPortrait
             }
           }, 1000)
         }
