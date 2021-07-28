@@ -32,14 +32,12 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
-import Indicator from 'vue-indicator'
 import Md5 from 'js-md5'
 
 export default {
   components: {
     BScroll,
-    Md5,
-    Indicator
+    Md5
   },
   data () {
     return {
