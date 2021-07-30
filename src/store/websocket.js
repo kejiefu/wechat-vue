@@ -1,19 +1,25 @@
-let Socket = ''
+let socket = ''
 let setIntervalWebsocketPush = null
+let wsUrl = 'ws://127.0.0.1:8082'
 
 /**
+ *  0     CONNECTING         连接尚未建立
+ 1        OPEN               WebSocket的链接已经建立
+ 2        CLOSING            连接正在关闭
+ 3        CLOSED             连接已经关闭或不可用
  * 建立websocket连接
  * @param {string} url ws地址
  */
 export const createSocket = url => {
-  Socket && Socket.close()
-  if (!Socket) {
+  socket && socket.close()
+  if (!socket) {
     console.log('建立websocket连接')
-    Socket = new WebSocket(url)
-    Socket.onopen = onopenWs
-    Socket.onmessage = onmessageWs
-    Socket.onerror = onerrorWs
-    Socket.onclose = oncloseWs
+    socket = new WebSocket(wsUrl)
+    socket.onopen = onopenWs
+    socket.onmessage = onmessageWs
+    socket.onerror = onerrorWs
+    socket.onclose = oncloseWs
+    console.log('createSocket.readyState:' + socket.readyState)
   } else {
     console.log('websocket已连接')
   }
@@ -21,17 +27,18 @@ export const createSocket = url => {
 
 /** 打开WS之后发送心跳 */
 const onopenWs = () => {
+  console.log('onopenWs.socket:' + socket.readyState)
   sendPing()
 }
 
 /** 连接失败重连 */
 const onerrorWs = () => {
-  Socket.close()
+  socket.close()
   clearInterval(setIntervalWebsocketPush)
   console.log('连接失败重连中')
-  if (Socket.readyState !== 3) {
-    Socket = null
-    createSocket()
+  if (socket.readyState !== 3) {
+    socket = null
+    createSocket(wsUrl)
   }
 }
 
@@ -50,10 +57,10 @@ const onmessageWs = e => {
  */
 const connecting = message => {
   setTimeout(() => {
-    if (Socket.readyState === 0) {
+    if (socket.readyState === 0) {
       connecting(message)
     } else {
-      Socket.send(JSON.stringify(message))
+      socket.send(JSON.stringify(message))
     }
   }, 1000)
 }
@@ -63,12 +70,15 @@ const connecting = message => {
  * @param {any} message 需要发送的数据
  */
 export const sendWsPush = message => {
-  if (Socket !== null && Socket.readyState === 3) {
-    Socket.close()
-    createSocket()
-  } else if (Socket.readyState === 1) {
-    Socket.send(JSON.stringify(message))
-  } else if (Socket.readyState === 0) {
+  console.log('sendWsPush...')
+  console.log(socket.readyState)
+  if (socket !== null && socket.readyState === 3) {
+    socket.close()
+    createSocket(wsUrl)
+  } else if (socket.readyState === 1) {
+    console.log('发送消息：' + message)
+    socket.send(JSON.stringify(message))
+  } else if (socket.readyState === 0) {
     connecting(message)
   }
 }
@@ -77,9 +87,10 @@ export const sendWsPush = message => {
 const oncloseWs = () => {
   clearInterval(setIntervalWebsocketPush)
   console.log('websocket已断开....正在尝试重连')
-  if (Socket.readyState !== 2) {
-    Socket = null
-    createSocket()
+  console.log('oncloseWs：' + socket.readyState, WebSocket.OPEN)
+  if (socket.readyState !== WebSocket.OPEN) {
+    socket = null
+    createSocket(wsUrl)
   }
 }
 /** 发送心跳
@@ -88,8 +99,9 @@ const oncloseWs = () => {
  */
 export const sendPing = (time = 5000, ping = 'ping') => {
   clearInterval(setIntervalWebsocketPush)
-  Socket.send(ping)
+  socket.send(ping)
   setIntervalWebsocketPush = setInterval(() => {
-    Socket.send(ping)
+    console.log('ping......')
+    socket.send(ping)
   }, time)
 }

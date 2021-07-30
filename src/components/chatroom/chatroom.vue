@@ -51,7 +51,7 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
 import {mapGetters} from 'vuex'
-import {createSocket} from '../../store/websocket.js'
+import {createSocket, sendWsPush} from '../../store/websocket.js'
 
 // 经过测试发现，在页面刷新时，实例依次执行了beforeCreate(),created(),beforeMount(),mounted(),beforeUpdate(),updated()。
 // 并没有来得及执行destroy，与把页面关闭再重新打开的效果是一样的。所以在beforeDestroy或destroyed时执行的代码，要额外考虑一下对页面刷新的处理。
@@ -61,7 +61,8 @@ import {createSocket} from '../../store/websocket.js'
 export default {
   components: {
     BScroll,
-    createSocket
+    createSocket,
+    sendWsPush
   },
   data () {
     return {
@@ -96,7 +97,7 @@ export default {
         click: true
       })
     })
-    createSocket('wss://api.baidu.com')
+    createSocket('')
   },
   methods: {
     back () {
@@ -114,10 +115,11 @@ export default {
           askImg: require('../../assets/me/minion.png'),
           askContent: this.text
         })
+        sendWsPush(this.text)
         setTimeout(() => {
           this.content.push({
             replyImg: '',
-            replyContent: this.randomReply[Math.floor(Math.random() * 19)]
+            replyContent: this.randomReply[Math.floor(Math.random() * 3)]
           })
           for (let i = 0; i < this.content.length; i++) { // 定义回复者的头像
             this.content[i].replyImg = this.info.headPortrait
