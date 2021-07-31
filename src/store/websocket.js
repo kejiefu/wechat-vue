@@ -27,7 +27,7 @@ export const createSocket = url => {
 
 /** 打开WS之后发送心跳 */
 const onopenWs = () => {
-  console.log('onopenWs.socket:' + socket.readyState)
+  console.log('onmessageWs,socket.readyState:' + socket.readyState)
   sendPing()
 }
 
@@ -44,7 +44,7 @@ const onerrorWs = () => {
 
 /** WS数据接收统一处理 */
 const onmessageWs = e => {
-  console.log(e.data)
+  console.log('onmessageWs:' + e.data)
 }
 
 /**
@@ -57,7 +57,7 @@ const connecting = message => {
       console.log('发送数据但连接未建立时进行处理等待重发')
       connecting(message)
     } else {
-      socket.send(message)
+      sendMessage(1, message)
     }
   }, 1000)
 }
@@ -68,13 +68,11 @@ const connecting = message => {
  */
 export const sendWsPush = message => {
   console.log('sendWsPush...')
-  console.log(socket.readyState)
   if (socket !== null && socket.readyState === 3) {
     socket.close()
     createSocket(wsUrl)
   } else if (socket.readyState === 1) {
-    console.log('发送消息：' + message)
-    socket.send(message)
+    sendMessage(1, message)
   } else if (socket.readyState === 0) {
     connecting(message)
   }
@@ -96,9 +94,33 @@ const oncloseWs = () => {
  */
 export const sendPing = (time = 50000, ping = 'ping') => {
   clearInterval(setIntervalWebsocketPush)
-  socket.send(ping)
   setIntervalWebsocketPush = setInterval(() => {
-    console.log('ping......')
-    socket.send(ping)
+    sendMessage(2, 'ping')
   }, time)
+}
+
+export const sendMessage = (type, message) => {
+  let data = {
+    id: guid(),
+    type: type,
+    content: message,
+    time: new Date().getTime()
+  }
+  let string = JSON.stringify(data)
+  console.log('sendMessage:' + string)
+  socket.send(string)
+}
+
+export const guid = () => {
+  const s = []
+  const hexDigits = '0123456789abcdef'
+  for (let i = 0; i < 36; i++) {
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1)
+  }
+  s[14] = '4' // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[8] = s[13] = s[18] = s[23] = '-'
+
+  const uuid = s.join('')
+  return uuid
 }
