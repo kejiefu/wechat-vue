@@ -44,11 +44,7 @@ const onerrorWs = () => {
 
 /** WS数据接收统一处理 */
 const onmessageWs = e => {
-  window.dispatchEvent(new CustomEvent('onmessageWS', {
-    detail: {
-      data: e.data
-    }
-  }))
+  console.log(e.data)
 }
 
 /**
@@ -58,9 +54,10 @@ const onmessageWs = e => {
 const connecting = message => {
   setTimeout(() => {
     if (socket.readyState === 0) {
+      console.log('发送数据但连接未建立时进行处理等待重发')
       connecting(message)
     } else {
-      socket.send(JSON.stringify(message))
+      socket.send(message)
     }
   }, 1000)
 }
@@ -77,7 +74,7 @@ export const sendWsPush = message => {
     createSocket(wsUrl)
   } else if (socket.readyState === 1) {
     console.log('发送消息：' + message)
-    socket.send(JSON.stringify(message))
+    socket.send(message)
   } else if (socket.readyState === 0) {
     connecting(message)
   }
@@ -94,10 +91,10 @@ const oncloseWs = () => {
   }
 }
 /** 发送心跳
- * @param {number} time 心跳间隔毫秒 默认5000
+ * @param {number} time 心跳间隔毫秒 默认50000
  * @param {string} ping 心跳名称 默认字符串ping
  */
-export const sendPing = (time = 5000, ping = 'ping') => {
+export const sendPing = (time = 50000, ping = 'ping') => {
   clearInterval(setIntervalWebsocketPush)
   socket.send(ping)
   setIntervalWebsocketPush = setInterval(() => {
