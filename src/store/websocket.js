@@ -14,7 +14,7 @@ export const createSocket = url => {
   socket && socket.close()
   if (!socket) {
     console.log('建立websocket连接')
-    socket = new WebSocket(wsUrl)
+    socket = new WebSocket(wsUrl + '/?token=' + localStorage.token)
     socket.onopen = onopenWs
     socket.onmessage = onmessageWs
     socket.onerror = onerrorWs
@@ -104,6 +104,7 @@ export const sendMessage = (type, message) => {
     id: guid(),
     type: type,
     content: message,
+    token: localStorage.token,
     time: new Date().getTime()
   }
   let string = JSON.stringify(data)
