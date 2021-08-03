@@ -51,7 +51,7 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
 import {mapGetters} from 'vuex'
-import {createSocket, sendWsPush} from '../../store/websocket.js'
+import {createSocket, sendWsPush, sendWsPushBySingle} from '../../store/websocket.js'
 
 // 经过测试发现，在页面刷新时，实例依次执行了beforeCreate(),created(),beforeMount(),mounted(),beforeUpdate(),updated()。
 // 并没有来得及执行destroy，与把页面关闭再重新打开的效果是一样的。所以在beforeDestroy或destroyed时执行的代码，要额外考虑一下对页面刷新的处理。
@@ -97,7 +97,7 @@ export default {
         click: true
       })
     })
-    createSocket('')
+    createSocket()
   },
   methods: {
     back () {
@@ -115,7 +115,8 @@ export default {
           askImg: require('../../assets/me/minion.png'),
           askContent: this.text
         })
-        sendWsPush(this.text)
+        let room = this.info.friendId
+        sendWsPushBySingle(this.text, room)
         setTimeout(() => {
           this.content.push({
             replyImg: '',

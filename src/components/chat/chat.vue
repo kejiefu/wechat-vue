@@ -23,7 +23,7 @@
             to='/chatroom'
             tag="li"
             v-for="info in chatList"
-            :key="info.id"
+            :key="info.friendId"
             class="item"
           >
             <div class="item-cell" @click="gotoChatroom(info)">

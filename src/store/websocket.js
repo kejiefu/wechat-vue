@@ -10,7 +10,7 @@ let wsUrl = 'ws://127.0.0.1:8082'
  * 建立websocket连接
  * @param {string} url ws地址
  */
-export const createSocket = url => {
+export const createSocket = () => {
   socket && socket.close()
   if (!socket) {
     console.log('建立websocket连接')
@@ -51,7 +51,7 @@ const onmessageWs = e => {
  * 发送数据但连接未建立时进行处理等待重发
  * @param {any} message 需要发送的数据
  */
-const connecting = message => {
+const connecting = (message) => {
   setTimeout(() => {
     if (socket.readyState === 0) {
       console.log('发送数据但连接未建立时进行处理等待重发')
@@ -66,13 +66,30 @@ const connecting = message => {
  * 发送数据
  * @param {any} message 需要发送的数据
  */
-export const sendWsPush = message => {
+export const sendWsPushBySingle = (message, room) => {
+  sendMessage(2, message, room)
+}
+
+/**
+ * 发送数据
+ * @param {any} message 需要发送的数据
+ */
+export const sendWsPushByGroup = (message, room) => {
+  sendMessage(3, message, room)
+}
+
+/**
+ * 发送数据
+ * @param type 类型
+ * @param {any} message 需要发送的数据
+ */
+export const sendWsPush = (type, message) => {
   console.log('sendWsPush...')
   if (socket !== null && socket.readyState === 3) {
     socket.close()
     createSocket(wsUrl)
   } else if (socket.readyState === 1) {
-    sendMessage(1, message)
+    sendMessage(type, message)
   } else if (socket.readyState === 0) {
     connecting(message)
   }
@@ -95,16 +112,24 @@ const oncloseWs = () => {
 export const sendPing = (time = 50000, ping = 'ping') => {
   clearInterval(setIntervalWebsocketPush)
   setIntervalWebsocketPush = setInterval(() => {
-    sendMessage(2, 'ping')
+    sendMessage(1, 'ping')
   }, time)
 }
 
-export const sendMessage = (type, message) => {
+export const sendMessage = (type, message, room) => {
+  let content = {
+    message: message,
+    token: localStorage.token
+  }
+  if (type === 1) {
+    content['friendId'] = room
+  } else if (type === 2) {
+    content['groupId'] = room
+  }
   let data = {
     id: guid(),
     type: type,
-    content: message,
-    token: localStorage.token,
+    content: content,
     time: new Date().getTime()
   }
   let string = JSON.stringify(data)
