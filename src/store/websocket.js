@@ -137,6 +137,10 @@ export const sendMessage = (type, message, room) => {
   socket.send(string)
 }
 
+/**
+ * 生成uuid
+ * @returns {string}
+ */
 export const guid = () => {
   const s = []
   const hexDigits = '0123456789abcdef'
