@@ -121,9 +121,9 @@ export const sendMessage = (type, message, room) => {
     message: message,
     token: localStorage.token
   }
-  if (type === 1) {
+  if (type === 2) {
     content['friendId'] = room
-  } else if (type === 2) {
+  } else if (type === 3) {
     content['groupId'] = room
   }
   let data = {

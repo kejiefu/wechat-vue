@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getData: function () {
-      let api = 'http://127.0.0.1:18085/user-friend/message'
+      let api = 'http://127.0.0.1:18085/user/friend/message'
       let headers = {'Content-Type': 'application/json;charset=utf-8', 'Authorization': localStorage.token}
       this.$http.post(api, {}, {headers: headers})
         .then((res) => {
