@@ -117,7 +117,7 @@ export default {
         })
         let room = this.info.friendId
         sendWsPushBySingle(this.text, room)
-        setTimeout(() => {
+        /* setTimeout(() => {
           this.content.push({
             replyImg: '',
             replyContent: this.randomReply[Math.floor(Math.random() * 3)]
@@ -125,7 +125,7 @@ export default {
           for (let i = 0; i < this.content.length; i++) { // 定义回复者的头像
             this.content[i].replyImg = this.info.headPortrait
           }
-        }, 1000)
+        }, 1000) */
       }
       this.$refs.sTest.value = '' // 清空输入框的内容
     },
