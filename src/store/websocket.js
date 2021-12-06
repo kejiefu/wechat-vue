@@ -45,6 +45,13 @@ const onerrorWs = () => {
 /** WS数据接收统一处理 */
 const onmessageWs = e => {
   console.log('onmessageWs:' + e.data)
+  let json = e.data
+  // 1：心跳消息。2：单聊消息。3：群聊消息
+  if (json.type === 2) {
+
+  } else if (json.type === 3) {
+
+  }
 }
 
 /**
@@ -68,6 +75,7 @@ const connecting = (message) => {
  */
 export const sendWsPushBySingle = (message, room) => {
   sendMessage(2, message, room)
+  return 'yes'
 }
 
 /**

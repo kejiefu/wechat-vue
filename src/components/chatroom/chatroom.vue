@@ -112,11 +112,12 @@ export default {
       this.text = this.$refs.sTest.value
       if (this.text !== '') {
         this.content.push({
-          askImg: require('../../assets/me/minion.png'),
+          askImg: localStorage.headPortrait,
           askContent: this.text
         })
         let room = this.info.friendId
-        sendWsPushBySingle(this.text, room)
+        let result = sendWsPushBySingle(this.text, room)
+        console.log('sendWsPushBySingle.result:' + result)
         /* setTimeout(() => {
           this.content.push({
             replyImg: '',
